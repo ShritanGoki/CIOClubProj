@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}How to Start a CIO{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-5">
+            <h1><i class="bi bi-rocket-takeoff text-primary"></i> How to Start a CIO at UVA</h1>
+            <p class="lead text-muted">A step-by-step guide to creating a Contracted Independent Organization at the University of Virginia.</p>
+        </div>
+
+        <div class="alert alert-info mb-4">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            <strong>Before you start:</strong> Check the
+            <a href="{% url 'cios:gauge_list' %}" class="alert-link">Gauge Interest</a> page to see if others share your idea, or propose your own to find potential co-founders.
+        </div>
+
+        <div class="accordion" id="startCIOAccordion">
+            <!-- Step 1 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#step1">
+                        <span class="badge bg-primary rounded-pill me-3">1</span>
+                        Develop Your Idea and Find Co-Founders
+                    </button>
+                </h2>
+                <div id="step1" class="accordion-collapse collapse show" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>Start by clearly defining the mission and purpose of your organization. Consider what gap your CIO will fill in the UVA community.</p>
+                        <ul>
+                            <li>Identify your organization's mission, goals, and target audience</li>
+                            <li>Research existing CIOs to make sure your idea is not duplicated</li>
+                            <li>Find at least 2-3 committed co-founders to help get things started</li>
+                            <li>Use the <a href="{% url 'cios:gauge_list' %}">Gauge Interest</a> feature to see if there is demand for your idea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step2">
+                        <span class="badge bg-primary rounded-pill me-3">2</span>
+                        Recruit at Least 10 Members
+                    </button>
+                </h2>
+                <div id="step2" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>UVA requires all CIOs to have a minimum of <strong>10 currently enrolled student members</strong> to be recognized.</p>
+                        <ul>
+                            <li>Spread the word through friends, classmates, and social media</li>
+                            <li>Host an informal interest meeting to gauge support</li>
+                            <li>Collect names and email addresses of interested students</li>
+                            <li>All members must be currently enrolled UVA students</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step3">
+                        <span class="badge bg-primary rounded-pill me-3">3</span>
+                        Write a Constitution
+                    </button>
+                </h2>
+                <div id="step3" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>Every CIO must have a written constitution that outlines how the organization will operate. UVA Student Activities provides templates to help.</p>
+                        <ul>
+                            <li>Include the organization name, purpose, and mission statement</li>
+                            <li>Define membership eligibility and requirements</li>
+                            <li>Outline officer positions, election procedures, and terms</li>
+                            <li>Describe meeting frequency and decision-making processes</li>
+                            <li>Include an anti-discrimination and anti-hazing statement</li>
+                            <li>Specify amendment procedures for the constitution</li>
+                            <li>All CIOs must comply with UVA's non-discrimination policies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step4">
+                        <span class="badge bg-primary rounded-pill me-3">4</span>
+                        Find a Faculty or Staff Advisor
+                    </button>
+                </h2>
+                <div id="step4" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>UVA requires each CIO to have at least one faculty or staff advisor who is a current University employee.</p>
+                        <ul>
+                            <li>Reach out to professors or staff members who align with your mission</li>
+                            <li>The advisor must be a current, full-time UVA faculty or staff member</li>
+                            <li>The advisor serves as a mentor and liaison with the University</li>
+                            <li>Advisors do not need to attend every meeting but should be available for guidance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step5">
+                        <span class="badge bg-primary rounded-pill me-3">5</span>
+                        Register with Student Activities
+                    </button>
+                </h2>
+                <div id="step5" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>Submit your registration through UVA's Office of Student Activities and Involvement using the Contracted Independent Organization Agreement.</p>
+                        <ul>
+                            <li>Complete the CIO registration form on the Student Activities website</li>
+                            <li>Upload your constitution</li>
+                            <li>Provide the names of at least 10 members and your faculty advisor</li>
+                            <li>Designate at least 2 officers (President and Treasurer at minimum)</li>
+                            <li>All designated officers must complete required training modules</li>
+                            <li>Accept the terms of the CIO Agreement with the University</li>
+                        </ul>
+                        <div class="alert alert-warning mt-3">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> CIOs are independent entities, not official University of Virginia organizations. The CIO Agreement outlines the terms under which the University permits the use of its name, facilities, and resources.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step6">
+                        <span class="badge bg-primary rounded-pill me-3">6</span>
+                        Complete Required Training
+                    </button>
+                </h2>
+                <div id="step6" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>Officers of newly registered CIOs must complete mandatory training before the organization becomes fully active.</p>
+                        <ul>
+                            <li>Complete the online CIO Officer Orientation modules</li>
+                            <li>Attend any required in-person sessions offered by Student Activities</li>
+                            <li>Review policies on event planning, funding, and risk management</li>
+                            <li>Understand UVA's policies on hazing prevention and alcohol use</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step7">
+                        <span class="badge bg-primary rounded-pill me-3">7</span>
+                        Launch and Grow Your CIO
+                    </button>
+                </h2>
+                <div id="step7" class="accordion-collapse collapse" data-bs-parent="#startCIOAccordion">
+                    <div class="accordion-body">
+                        <p>Once approved, it is time to build your community and make an impact!</p>
+                        <ul>
+                            <li>Create your CIO profile on this Clearinghouse to attract members</li>
+                            <li>Attend the Student Activities Fair at the beginning of each semester</li>
+                            <li>Host events, meetings, and outreach to grow your membership</li>
+                            <li>Apply for funding through Student Council or your school's student government</li>
+                            <li>Book rooms through 25Live for meetings and events</li>
+                            <li>Remember to re-register your CIO each academic year to stay active</li>
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'cios:create' %}" class="btn btn-primary mt-2">
+                            <i class="bi bi-plus-circle"></i> Create Your CIO Profile
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpful Resources -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header"><h5 class="mb-0"><i class="bi bi-link-45deg"></i> Helpful Resources</h5></div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <a href="https://studentaffairs.virginia.edu/topic/activities-organizations" target="_blank" rel="noopener">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>UVA Office of Student Activities and Involvement
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://virginia.campuslabs.com/engage/" target="_blank" rel="noopener">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>UVA Student Organization Directory (CavalierConnect)
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'cios:gauge_list' %}">
+                            <i class="bi bi-lightbulb me-2"></i>Gauge Interest for New CIO Ideas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'cios:list' %}">
+                            <i class="bi bi-search me-2"></i>Browse Existing CIOs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

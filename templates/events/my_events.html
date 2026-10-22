@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}My Events{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-calendar-event me-2"></i>My Events</h2>
+
+<!-- Upcoming Events -->
+<h4 class="mb-3">Upcoming Events</h4>
+{% if upcoming_events %}
+<div class="list-group mb-5">
+    {% for event in upcoming_events %}
+    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+        <div>
+            <h5 class="mb-1">{{ event.title }}</h5>
+            <p class="mb-1 text-muted">
+                <i class="bi bi-people-fill me-1"></i> {{ event.cio.name }}
+            </p>
+            <small class="text-muted">
+                <i class="bi bi-clock me-1"></i> {{ event.date_time|date:"N j, Y g:i A" }}
+                {% if event.location %}
+                    <span class="ms-3"><i class="bi bi-geo-alt me-1"></i> {{ event.location }}</span>
+                {% endif %}
+            </small>
+        </div>
+        <button class="btn btn-sm btn-outline-primary reminder-toggle"
+                data-event-id="{{ event.id }}"
+                title="{% if event.id in reminder_event_ids %}Remove reminder{% else %}Set reminder{% endif %}">
+            {% if event.id in reminder_event_ids %}
+                <i class="bi bi-bell-fill"></i>
+            {% else %}
+                <i class="bi bi-bell"></i>
+            {% endif %}
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info mb-5">
+    <i class="bi bi-info-circle me-1"></i> You have no upcoming events.
+</div>
+{% endif %}
+
+<!-- Past Events -->
+<h4 class="mb-3">Past Events</h4>
+{% if past_events %}
+<div class="list-group mb-4">
+    {% for event in past_events %}
+    <div class="list-group-item d-flex justify-content-between align-items-start">
+        <div>
+            <h5 class="mb-1 text-muted">{{ event.title }}</h5>
+            <p class="mb-1 text-muted">
+                <i class="bi bi-people-fill me-1"></i> {{ event.cio.name }}
+            </p>
+            <small class="text-muted">
+                <i class="bi bi-clock me-1"></i> {{ event.date_time|date:"N j, Y g:i A" }}
+                {% if event.location %}
+                    <span class="ms-3"><i class="bi bi-geo-alt me-1"></i> {{ event.location }}</span>
+                {% endif %}
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-secondary mb-4">
+    <i class="bi bi-info-circle me-1"></i> No past events.
+</div>
+{% endif %}
+{% endblock %}

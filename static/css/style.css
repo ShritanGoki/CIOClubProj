@@ -1,0 +1,252 @@
+/* UVA CIO Clearinghouse — Custom Styles */
+
+:root {
+    --uva-navy: #232D4B;
+    --uva-orange: #E57200;
+    --uva-blue: #141E3C;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937;
+}
+
+a {
+    color: var(--uva-navy);
+}
+
+a:hover {
+    color: #1a2238;
+}
+
+/* Override Bootstrap primary to UVA Navy */
+.bg-primary, .btn-primary {
+    background-color: var(--uva-navy) !important;
+    border-color: var(--uva-navy) !important;
+}
+.btn-primary:hover {
+    background-color: #1a2238 !important;
+    border-color: #1a2238 !important;
+}
+.btn-outline-primary {
+    color: var(--uva-navy) !important;
+    border-color: var(--uva-navy) !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--uva-navy) !important;
+    color: white !important;
+}
+.text-primary {
+    color: var(--uva-navy) !important;
+}
+.bg-primary-subtle {
+    background-color: rgba(35, 45, 75, 0.1) !important;
+}
+.btn-warning, .bg-warning {
+    background-color: var(--uva-orange) !important;
+    border-color: var(--uva-orange) !important;
+}
+
+/* Card hover effect */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(135deg, var(--uva-navy) 0%, var(--uva-orange) 100%);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--uva-navy) !important;
+}
+
+/* Profile picture */
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.profile-pic-sm {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-pic-xs {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Star rating */
+.star-rating .bi-star-fill {
+    color: #ffc107;
+}
+.star-rating .bi-star {
+    color: #dee2e6;
+}
+
+/* Chat messages */
+.chat-message {
+    max-width: 70%;
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+}
+.chat-message-sent {
+    background-color: var(--uva-navy);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0.25rem;
+}
+.chat-message-received {
+    background-color: #f0f0f0;
+    border-bottom-left-radius: 0.25rem;
+}
+
+/* Badge styles */
+.badge-bookmark {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.badge-bookmark:hover {
+    transform: scale(1.1);
+}
+
+/* Photo gallery */
+.photo-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease;
+}
+.photo-grid img:hover {
+    transform: scale(1.02);
+}
+
+/* Tab styling */
+.nav-tabs .nav-link.active {
+    color: var(--uva-navy);
+    border-bottom: 3px solid var(--uva-navy);
+    font-weight: 600;
+}
+
+/* Analytics stat card */
+.stat-card {
+    text-align: center;
+    padding: 1.5rem;
+}
+.stat-card .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--uva-navy);
+}
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Filter sidebar */
+.filter-sidebar .form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #6c757d;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Footer */
+.site-footer h5,
+.site-footer h6 {
+    margin-bottom: 0.75rem;
+}
+
+.site-footer ul li + li {
+    margin-top: 0.35rem;
+}
+
+footer .text-muted {
+    color: #b9c2d0 !important;
+}
+
+footer a.text-muted {
+    color: #d4d9e3 !important;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* CIO typography and link consistency */
+.cio-name-link {
+    color: #1f2937 !important;
+    font-weight: 600;
+}
+
+.cio-name-link:hover {
+    color: var(--uva-navy) !important;
+}
+
+.cio-profile-link {
+    color: var(--uva-navy) !important;
+    font-weight: 600;
+}
+
+.cio-profile-link:hover {
+    color: #1a2238 !important;
+}
+
+.card .card-title {
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.badge {
+    letter-spacing: 0.1px;
+}
+
+/* CIO detail hero */
+.cio-hero-card {
+    margin-top: -64px;
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.cio-hero-title {
+    color: #1f2937;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Unread message indicator */
+.conversation-unread {
+    background-color: rgba(35, 45, 75, 0.05);
+    border-left: 3px solid var(--uva-navy);
+}
+
+/* Accordion for guide */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(35, 45, 75, 0.05);
+    color: var(--uva-navy);
+}

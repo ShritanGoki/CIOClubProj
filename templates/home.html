@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block main_class %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-white text-center py-5" style="background: linear-gradient(135deg, #232D4B 0%, #E57200 100%);">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold mb-3">Discover Your Community at UVA</h1>
+        <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+            Browse hundreds of Contracted Independent Organizations, find your fit, and get involved.
+        </p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="{% url 'cios:list' %}" method="get" class="d-flex">
+                    <input type="text" name="q" class="form-control form-control-lg me-2" placeholder="Search for a CIO...">
+                    <button type="submit" class="btn btn-light btn-lg px-4"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'cios:list' %}" class="btn btn-outline-light btn-lg me-2">Browse All CIOs</a>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'account_signup' %}" class="btn btn-warning btn-lg">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Browse by Category</h2>
+        <div class="row g-3 justify-content-center">
+            {% for cat in categories %}
+            <div class="col-6 col-md-3">
+                <a href="{% url 'cios:list' %}?category={{ cat.slug }}" class="card text-decoration-none h-100 border-0 shadow-sm card-hover">
+                    <div class="card-body text-center py-4">
+                        <i class="bi {{ cat.icon|default:'bi-people' }} fs-1 text-primary"></i>
+                        <h5 class="card-title mt-2 mb-1">{{ cat.name }}</h5>
+                        <span class="badge bg-primary-subtle text-primary">{{ cat.cio_count }} CIO{{ cat.cio_count|pluralize }}</span>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center text-muted">
+                <p>No categories yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured CIOs -->
+{% if featured_cios %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Popular Organizations</h2>
+        <div class="row g-4">
+            {% for cio in featured_cios %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-hover">
+                    {% if cio.banner_image %}
+                    <img src="{{ cio.banner_image.url }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ cio.name }}">
+                    {% else %}
+                    <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 160px;">
+                        <i class="bi bi-people-fill text-white" style="font-size: 3rem;"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            {% if cio.logo %}
+                            <img src="{{ cio.logo.url }}" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                            {% endif %}
+                            <h5 class="card-title mb-0">{{ cio.name }}</h5>
+                        </div>
+                        <p class="card-text text-muted small">{{ cio.short_description|default:cio.description|truncatewords:20 }}</p>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% if cio.category %}
+                            <span class="badge bg-primary-subtle text-primary">{{ cio.category.name }}</span>
+                            {% endif %}
+                            <span class="badge bg-secondary-subtle text-secondary">{{ cio.get_membership_type_display }}</span>
+                            <span class="badge bg-info-subtle text-info">{{ cio.get_time_commitment_display }}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{% url 'cios:detail' cio.slug %}" class="btn btn-outline-primary btn-sm w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Upcoming Events -->
+{% if upcoming_events %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Upcoming Events</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="list-group">
+                    {% for event in upcoming_events %}
+                    <a href="{% url 'cios:detail' event.cio.slug %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">{{ event.title }}</h6>
+                                <small class="text-muted">{{ event.cio.name }}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary">{{ event.start_time|date:"M d" }}</span>
+                                <br><small class="text-muted">{{ event.start_time|date:"g:i A" }}</small>
+                            </div>
+                        </div>
+                        {% if event.location %}
+                        <small class="text-muted"><i class="bi bi-geo-alt"></i> {{ event.location }}</small>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-5 text-center">
+    <div class="container">
+        <h2>Want to Start Your Own CIO?</h2>
+        <p class="text-muted mb-4">We've got everything you need to get started.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'cios:start_guide' %}" class="btn btn-primary btn-lg">How to Start a CIO</a>
+            <a href="{% url 'cios:gauge_list' %}" class="btn btn-outline-primary btn-lg">Gauge Interest</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

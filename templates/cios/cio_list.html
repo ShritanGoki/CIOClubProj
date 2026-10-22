@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Browse CIOs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar Filters -->
+    <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-funnel"></i> Filters</h5>
+            </div>
+            <div class="card-body">
+                <form method="get" action="{% url 'cios:list' %}" id="filter-form">
+                    {% if query %}
+                    <input type="hidden" name="q" value="{{ query }}">
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label fw-semibold">Category</label>
+                        <select name="category" id="category" class="form-select form-select-sm">
+                            <option value="">All Categories</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="membership" class="form-label fw-semibold">Membership</label>
+                        <select name="membership" id="membership" class="form-select form-select-sm">
+                            <option value="">Any Type</option>
+                            <option value="open" {% if selected_membership == "open" %}selected{% endif %}>Open Membership</option>
+                            <option value="application" {% if selected_membership == "application" %}selected{% endif %}>Application Required</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="commitment" class="form-label fw-semibold">Time Commitment</label>
+                        <select name="commitment" id="commitment" class="form-select form-select-sm">
+                            <option value="">Any Level</option>
+                            <option value="low" {% if selected_commitment == "low" %}selected{% endif %}>Low (1-2 hrs/week)</option>
+                            <option value="medium" {% if selected_commitment == "medium" %}selected{% endif %}>Medium (3-5 hrs/week)</option>
+                            <option value="high" {% if selected_commitment == "high" %}selected{% endif %}>High (6-10 hrs/week)</option>
+                            <option value="very_high" {% if selected_commitment == "very_high" %}selected{% endif %}>Very High (10+ hrs/week)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="meeting_day" class="form-label fw-semibold">Meeting Day</label>
+                        <select name="meeting_day" id="meeting_day" class="form-select form-select-sm">
+                            <option value="">Any Day</option>
+                            <option value="monday" {% if selected_meeting_day == "monday" %}selected{% endif %}>Monday</option>
+                            <option value="tuesday" {% if selected_meeting_day == "tuesday" %}selected{% endif %}>Tuesday</option>
+                            <option value="wednesday" {% if selected_meeting_day == "wednesday" %}selected{% endif %}>Wednesday</option>
+                            <option value="thursday" {% if selected_meeting_day == "thursday" %}selected{% endif %}>Thursday</option>
+                            <option value="friday" {% if selected_meeting_day == "friday" %}selected{% endif %}>Friday</option>
+                            <option value="saturday" {% if selected_meeting_day == "saturday" %}selected{% endif %}>Saturday</option>
+                            <option value="sunday" {% if selected_meeting_day == "sunday" %}selected{% endif %}>Sunday</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sort" class="form-label fw-semibold">Sort By</label>
+                        <select name="sort" id="sort" class="form-select form-select-sm">
+                            <option value="name" {% if selected_sort == "name" %}selected{% endif %}>Name (A-Z)</option>
+                            <option value="newest" {% if selected_sort == "newest" %}selected{% endif %}>Newest First</option>
+                            <option value="popular" {% if selected_sort == "popular" %}selected{% endif %}>Most Popular</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Apply Filters</button>
+                    <a href="{% url 'cios:list' %}" class="btn btn-outline-secondary w-100 mt-2"><i class="bi bi-x-circle"></i> Clear Filters</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+        <!-- Search Bar -->
+        <form method="get" action="{% url 'cios:list' %}" class="mb-4">
+            {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+            {% if selected_membership %}<input type="hidden" name="membership" value="{{ selected_membership }}">{% endif %}
+            {% if selected_commitment %}<input type="hidden" name="commitment" value="{{ selected_commitment }}">{% endif %}
+            {% if selected_meeting_day %}<input type="hidden" name="meeting_day" value="{{ selected_meeting_day }}">{% endif %}
+            {% if selected_sort %}<input type="hidden" name="sort" value="{{ selected_sort }}">{% endif %}
+            <div class="input-group input-group-lg">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" class="form-control" placeholder="Search CIOs by name or description..." value="{{ query }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        {% if query %}
+        <p class="text-muted mb-3">Showing results for "<strong>{{ query }}</strong>" ({{ cios|length }} found)</p>
+        {% endif %}
+
+        <!-- CIO Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+            {% for cio in cios %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        {% if cio.logo %}
+                        <img src="{{ cio.logo.url }}" class="card-img-top" alt="{{ cio.name }}" style="height: 160px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 160px;">
+                            <i class="bi bi-people-fill text-muted" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <form method="post"
+                            action="{% url 'cios:toggle_bookmark' cio.slug %}"
+                            class="position-absolute top-0 end-0 m-2"
+                            style="z-index: 10;">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-sm {% if cio.id in bookmarked_ids %}btn-warning{% else %}btn-light{% endif %} rounded-circle shadow-sm"
+                                    onclick="event.preventDefault(); event.stopPropagation(); this.closest('form').submit();">
+                                <i class="bi {% if cio.id in bookmarked_ids %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            <a href="{% url 'cios:detail' cio.slug %}" class="text-decoration-none cio-name-link stretched-link">{{ cio.name }}</a>
+                        </h5>
+                        <p class="card-text text-muted small flex-grow-1">{{ cio.short_description|default:cio.description|truncatewords:20 }}</p>
+                        <div class="d-flex flex-wrap gap-1 mb-2">
+                            {% if cio.category %}
+                            <span class="badge bg-primary">{{ cio.category.name }}</span>
+                            {% endif %}
+                            <span class="badge {% if cio.membership_type == 'open' %}bg-success{% else %}bg-info{% endif %}">
+                                {{ cio.get_membership_type_display }}
+                            </span>
+                            <span class="badge bg-secondary">{{ cio.get_time_commitment_display }}</span>
+                        </div>
+                        <div class="text-warning small">
+                            {% if cio.avg_rating %}
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= cio.avg_rating %}
+                                    <i class="bi bi-star-fill"></i>
+                                    {% elif forloop.counter <= cio.avg_rating|add:"0.5" %}
+                                    <i class="bi bi-star-half"></i>
+                                    {% else %}
+                                    <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                <span class="text-muted ms-1">{{ cio.avg_rating|floatformat:1 }}</span>
+                            {% else %}
+                                <span class="text-muted">No reviews yet</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-search text-muted" style="font-size: 3rem;"></i>
+                    <h4 class="text-muted mt-3">No CIOs found</h4>
+                    <p class="text-muted">Try adjusting your filters or search terms.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

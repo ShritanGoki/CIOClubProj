@@ -1,0 +1,12 @@
+[run]
+source = accounts,cios,events,messaging,clearinghouse
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    clearinghouse/asgi.py
+    clearinghouse/wsgi.py
+
+[report]
+exclude_lines =
+    pragma: no cover
